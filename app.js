@@ -21,6 +21,9 @@ const conn = mysql.createConnection({
   password: config.get('db.password')
 })
 
+//I'm splitting the API into two sides: vendor and customer. Starting off work with the vendor side.
+
+// Using this app.post as the form to add items to the vending machine. This would be the vendor side.
 app.post("/add", function(req, res, next){
   const item = req.body.item
   const description = req.body.description
@@ -44,6 +47,7 @@ app.post("/add", function(req, res, next){
   })
 })
 
+// Completely swapped the index and the add pages, which is why I'm super confused at the moment. The add page works. Data goes into the form, pops up in the database. Next up, trying to get all the data to show up on the index.
 app.get("/", function(req, res, next){
   res.render("index", {appType:"Vending Machine"})
 })
