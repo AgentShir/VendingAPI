@@ -2,10 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <title>What's in the machine?</title>
   <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
-  <h1>{{appType}}!</h1>
+  <h1>Things in the machine:</h1>
+    <div><a href="/add">Add Item</a></div>
+    <ul>
+      {{#item}}
+        <li>
+          {{description}}
+        </li>
+      {{/item}}
+    </ul>
 </body>
 </html>
