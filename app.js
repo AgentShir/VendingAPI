@@ -13,7 +13,6 @@ app.set('views', './views')
 app.set('view engine', 'mustache')
 app.use(express.static(path.join(__dirname, 'static')))
 
-// before you use this, make sure to update the default.json file in /config
 const conn = mysql.createConnection({
   host: config.get('db.host'),
   database: config.get('db.database'),
@@ -23,7 +22,7 @@ const conn = mysql.createConnection({
 
 //I'm splitting the API into two sides: vendor and customer. Starting off work with the vendor side.
 
-// Using this app.post as the form to add items to the vending machine. This would be the vendor side.
+// Using this app.post as the form to add items to the vending machine. This is the vendor side.
 app.post("/add", function(req, res, next){
   const item = req.body.item
   const description = req.body.description
@@ -47,9 +46,19 @@ app.post("/add", function(req, res, next){
   })
 })
 
-// Completely swapped the index and the add pages, which is why I'm super confused at the moment. The add page works. Data goes into the form, pops up in the database. Next up, trying to get all the data to show up on the index.
+// Next up, trying to get all the data to show up on the index. So far, it'll show up in the terminal. On the page, is an entirely different story.
 app.get("/", function(req, res, next){
-  res.render("index", {appType:"Vending Machine"})
+  const sql = `
+    SELECT * FROM vendor
+  `
+  conn.query(sql, function(err, results, fields){
+    console.log(results)
+
+    const cxt = {
+      vendor: results
+    }
+      res.render("index", cxt)
+  })
 })
 
 
